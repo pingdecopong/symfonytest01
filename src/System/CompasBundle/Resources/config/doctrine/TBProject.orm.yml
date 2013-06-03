@@ -1,0 +1,70 @@
+System\CompasBundle\Entity\TBProject:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        ContractId:
+            type: integer
+            nullable: true
+        Name:
+            type: string
+            length: 255
+            nullable: true
+        NormalFlug:
+            type: boolean
+            nullable: true
+        DocRoomFlug:
+            type: boolean
+            nullable: true
+        MongoDBFlug:
+            type: boolean
+            nullable: true
+        ActiveFlug:
+            type: boolean
+            nullable: true
+        DeleteFlug:
+            type: boolean
+            nullable: true
+        CreatedDatetime:
+            type: datetime
+            nullable: true
+        UpdatedDatetime:
+            type: datetime
+            nullable: true
+    oneToMany:
+        tbprojectenters:
+            targetEntity: TBProjectEnter
+            mappedBy: tbproject
+        tbissues:
+            targetEntity: TBIssue
+            mappedBy: tbproject
+        tbdocuments:
+            targetEntity: TBDocument
+            mappedBy: tbproject
+        tbissuecategorys:
+            targetEntity: TBIssueCategory
+            mappedBy: tbproject
+        tbissuestatuss:
+            targetEntity: TBIssueStatus
+            mappedBy: tbproject
+        tbissueprioritys:
+            targetEntity: TBIssuePriority
+            mappedBy: tbproject
+        tbdocumentcategorys:
+            targetEntity: TBDocumentCategory
+            mappedBy: tbproject
+        tbinformations:
+            targetEntity: TBInformation
+            mappedBy: tbproject
+    manyToOne:
+        tbcontract:
+            targetEntity: TBContract
+            inversedBy: tbprojects
+            joinColumns:
+                ContractId:
+                    referencedColumnName: id
+    manyToMany: {  }

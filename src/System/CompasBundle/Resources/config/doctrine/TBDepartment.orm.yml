@@ -1,0 +1,43 @@
+System\CompasBundle\Entity\TBDepartment:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        CompanyId:
+            type: integer
+            nullable: true
+        ContractId:
+            type: integer
+            nullable: true
+        Name:
+            type: string
+            length: 255
+            nullable: true
+        DeleteFlug:
+            type: boolean
+            nullable: true
+        SortNo:
+            type: integer
+            nullable: true
+    oneToMany:
+        tbsystemusers:
+            targetEntity: TBSystemUser
+            mappedBy: tbdepartment
+    manyToOne:
+        tbcompany:
+            targetEntity: TBCompany
+            inversedBy: tbdepartments
+            joinColumns:
+                CompanyId:
+                    referencedColumnName: id
+        tbcontract:
+            targetEntity: TBContract
+            inversedBy: tbdepartments
+            joinColumns:
+                ContractId:
+                    referencedColumnName: id
+    manyToMany: {  }

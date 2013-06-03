@@ -1,5 +1,5 @@
 system_compas:
     resource: "@SystemCompasBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /compas
 

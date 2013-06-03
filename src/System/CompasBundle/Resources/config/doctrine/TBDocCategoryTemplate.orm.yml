@@ -1,0 +1,19 @@
+System\CompasBundle\Entity\TBDocCategoryTemplate:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        Name:
+            type: string
+            length: 255
+            nullable: true
+    oneToMany:
+        tbdoccategorytemplatedetas:
+            targetEntity: TBDocCategoryTemplateDeta
+            mappedBy: tbdoccategorytemplate
+    manyToOne: {  }
+    manyToMany: {  }

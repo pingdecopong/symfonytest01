@@ -1,0 +1,30 @@
+System\CompasBundle\Entity\TBReplyUser:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        IssueReplyId:
+            type: integer
+            nullable: true
+        ProjectEnterId:
+            type: integer
+            nullable: true
+    oneToMany: {  }
+    manyToOne:
+        tbissuereply:
+            targetEntity: TBIssueReply
+            inversedBy: tbreplyusers
+            joinColumns:
+                IssueReplyId:
+                    referencedColumnName: id
+        tbprojectenter:
+            targetEntity: TBProjectEnter
+            inversedBy: tbreplyusers
+            joinColumns:
+                ProjectEnterId:
+                    referencedColumnName: id
+    manyToMany: {  }

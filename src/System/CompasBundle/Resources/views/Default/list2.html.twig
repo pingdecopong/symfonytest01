@@ -1,0 +1,35 @@
+{% extends "::base.html.twig" %}
+{% form_theme form 'pingdecopongFormFreezeBundle:Form:form_layout.html.twig' %}
+
+{% block title %}ユーザ情報　一覧{% endblock %}
+
+{% block body %}
+    <h1>ユーザ一覧</h1>
+    <form action="{{ path('systemuser_list2') }}" method="get" {{ form_enctype(form) }} novalidate name="systemuser_list2">
+
+        {{ form_widget(form) }}
+
+        <div>
+            {% for page in pager.pager_list_row %}
+                {% if page.select %}
+                    {{ page.label }}
+                {% else %}
+                    <a href="#" onclick="pagenoClick({{ page.pageNo }})">{{ page.label }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        //<![CDATA[
+        function pagenoClick(pageno){
+            document.systemuser_list2.{{ form.pageNo.vars.id }}.value = pageno;
+            document.systemuser_list2.submit();
+        }
+
+        //]]>
+    </script>
+{% endblock %}

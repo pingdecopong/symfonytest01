@@ -1,0 +1,37 @@
+System\CompasBundle\Entity\TBDocumentFile:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        DocumentId:
+            type: integer
+            nullable: true
+        FileName:
+            type: string
+            length: 255
+            nullable: true
+        DeleteFlug:
+            type: boolean
+            nullable: true
+        CreatedDatetime:
+            type: datetime
+            nullable: true
+        UpdatedDatetime:
+            type: datetime
+            nullable: true
+    oneToMany:
+        tbdocumnetphysicalfiles:
+            targetEntity: TBDocumnetPhysicalFile
+            mappedBy: tbdocumentfile
+    manyToOne:
+        tbdocument:
+            targetEntity: TBDocument
+            inversedBy: tbdocumentfiles
+            joinColumns:
+                DocumentId:
+                    referencedColumnName: id
+    manyToMany: {  }

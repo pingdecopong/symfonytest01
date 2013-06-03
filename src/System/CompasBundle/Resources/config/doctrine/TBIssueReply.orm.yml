@@ -1,0 +1,79 @@
+System\CompasBundle\Entity\TBIssueReply:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        IssueId:
+            type: integer
+            nullable: true
+        IssueCategoryId:
+            type: integer
+            nullable: true
+        IssueStatusId:
+            type: integer
+            nullable: true
+        IssuePriorityId:
+            type: integer
+            nullable: true
+        Body:
+            type: string
+            length: 255
+            nullable: true
+        DeleteFlug:
+            type: boolean
+            nullable: true
+        CreatedDatetime:
+            type: datetime
+            nullable: true
+        UpdatedDatetime:
+            type: datetime
+            nullable: true
+        CreatedUserId:
+            type: integer
+            nullable: true
+    oneToMany:
+        tbreplyusers:
+            targetEntity: TBReplyUser
+            mappedBy: tbissuereply
+        tbdocumentissuelinks:
+            targetEntity: TBDocumentIssueLink
+            mappedBy: tbissuereply
+        tbissuefiles:
+            targetEntity: TBIssueFile
+            mappedBy: tbissuereply
+    manyToOne:
+        tbissue:
+            targetEntity: TBIssue
+            inversedBy: tbissuereplys
+            joinColumns:
+                IssueId:
+                    referencedColumnName: id
+        tbissuecategory:
+            targetEntity: TBIssueCategory
+            inversedBy: tbissuereplys
+            joinColumns:
+                IssueCategoryId:
+                    referencedColumnName: id
+        tbissuestatus:
+            targetEntity: TBIssueStatus
+            inversedBy: tbissuereplys
+            joinColumns:
+                IssueStatusId:
+                    referencedColumnName: id
+        tbissuepriority:
+            targetEntity: TBIssuePriority
+            inversedBy: tbissuereplys
+            joinColumns:
+                IssuePriorityId:
+                    referencedColumnName: id
+        tbsystemuser:
+            targetEntity: TBSystemUser
+            inversedBy: tbissuereplys
+            joinColumns:
+                CreatedUserId:
+                    referencedColumnName: id
+    manyToMany: {  }

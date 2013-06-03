@@ -1,0 +1,36 @@
+System\CompasBundle\Entity\TBDocCategoryTemplateDeta:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        DocCategoryTemplateId:
+            type: integer
+            nullable: true
+        Name:
+            type: string
+            length: 255
+            nullable: true
+        Description:
+            type: string
+            length: 255
+            nullable: true
+        IconFileName:
+            type: string
+            length: 255
+            nullable: true
+        SortNo:
+            type: integer
+            nullable: true
+    oneToMany: {  }
+    manyToOne:
+        tbdoccategorytemplate:
+            targetEntity: TBDocCategoryTemplate
+            inversedBy: tbdoccategorytemplatedetas
+            joinColumns:
+                DocCategoryTemplateId:
+                    referencedColumnName: id
+    manyToMany: {  }

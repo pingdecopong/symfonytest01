@@ -20,6 +20,8 @@ class AppKernel extends Kernel
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new System\CompasBundle\SystemCompasBundle(),
+            new Arte\Ober2doctrineBundle\ArteOber2doctrineBundle(),//ArteOber2doctrine
+            new pingdecopong\FormFreezeBundle\pingdecopongFormFreezeBundle(),//FormFreeze
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

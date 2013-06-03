@@ -1,0 +1,56 @@
+System\CompasBundle\Entity\TBDocumnetPhysicalFile:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        DocumentFileId:
+            type: integer
+            nullable: true
+        PhysicalFileName:
+            type: string
+            length: 255
+            nullable: true
+        Comment:
+            type: string
+            length: 255
+            nullable: true
+        Size:
+            type: integer
+            nullable: true
+        Version:
+            type: integer
+            nullable: true
+        DeleteFlug:
+            type: boolean
+            nullable: true
+        CreatedDatetime:
+            type: datetime
+            nullable: true
+        UpdatedDatetime:
+            type: datetime
+            nullable: true
+        CreatedUserId:
+            type: integer
+            nullable: true
+    oneToMany:
+        tbdocumentissuelinks:
+            targetEntity: TBDocumentIssueLink
+            mappedBy: tbdocumnetphysicalfile
+    manyToOne:
+        tbdocumentfile:
+            targetEntity: TBDocumentFile
+            inversedBy: tbdocumnetphysicalfiles
+            joinColumns:
+                DocumentFileId:
+                    referencedColumnName: id
+        tbsystemuser:
+            targetEntity: TBSystemUser
+            inversedBy: tbdocumnetphysicalfiles
+            joinColumns:
+                CreatedUserId:
+                    referencedColumnName: id
+    manyToMany: {  }

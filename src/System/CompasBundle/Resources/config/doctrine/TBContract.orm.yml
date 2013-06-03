@@ -1,0 +1,31 @@
+System\CompasBundle\Entity\TBContract:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        Name:
+            type: string
+            length: 255
+            nullable: true
+        Active:
+            type: boolean
+            nullable: true
+    oneToMany:
+        tbsystemusers:
+            targetEntity: TBSystemUser
+            mappedBy: tbcontract
+        tbcompanys:
+            targetEntity: TBCompany
+            mappedBy: tbcontract
+        tbdepartments:
+            targetEntity: TBDepartment
+            mappedBy: tbcontract
+        tbprojects:
+            targetEntity: TBProject
+            mappedBy: tbcontract
+    manyToOne: {  }
+    manyToMany: {  }

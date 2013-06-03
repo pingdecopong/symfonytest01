@@ -1,0 +1,36 @@
+System\CompasBundle\Entity\TBIssueCategoryTemplateDetail:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        IssueCategoryTemplateId:
+            type: integer
+            nullable: true
+        Name:
+            type: string
+            length: 255
+            nullable: true
+        Description:
+            type: string
+            length: 255
+            nullable: true
+        IconFileName:
+            type: string
+            length: 255
+            nullable: true
+        SortNo:
+            type: integer
+            nullable: true
+    oneToMany: {  }
+    manyToOne:
+        tbissuecategorytemplate:
+            targetEntity: TBIssueCategoryTemplate
+            inversedBy: tbissuecategorytemplatedetails
+            joinColumns:
+                IssueCategoryTemplateId:
+                    referencedColumnName: id
+    manyToMany: {  }

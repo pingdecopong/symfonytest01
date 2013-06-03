@@ -1,0 +1,24 @@
+System\CompasBundle\Entity\TBInformationViewHistory:
+    type: entity
+    indexes: {  }
+    id:
+        ProjectEnterId:
+            type: integer
+        InformationId:
+            type: integer
+    fields: {  }
+    oneToMany: {  }
+    manyToOne:
+        tbprojectenter:
+            targetEntity: TBProjectEnter
+            inversedBy: tbinformationviewhistorys
+            joinColumns:
+                ProjectEnterId:
+                    referencedColumnName: id
+        tbinformation:
+            targetEntity: TBInformation
+            inversedBy: tbinformationviewhistorys
+            joinColumns:
+                InformationId:
+                    referencedColumnName: id
+    manyToMany: {  }

@@ -1,0 +1,52 @@
+System\CompasBundle\Entity\TBIssue:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        ProjectId:
+            type: integer
+            nullable: true
+        Title:
+            type: string
+            length: 255
+            nullable: true
+        EndFlug:
+            type: boolean
+            nullable: true
+        DeleteFlug:
+            type: boolean
+            nullable: true
+        CreatedDatetime:
+            type: datetime
+            nullable: true
+        UpdatedDatetime:
+            type: datetime
+            nullable: true
+        CreatedUserId:
+            type: integer
+            nullable: true
+    oneToMany:
+        tbissuereplys:
+            targetEntity: TBIssueReply
+            mappedBy: tbissue
+        tbissueviewhistorys:
+            targetEntity: TBIssueViewHistory
+            mappedBy: tbissue
+    manyToOne:
+        tbproject:
+            targetEntity: TBProject
+            inversedBy: tbissues
+            joinColumns:
+                ProjectId:
+                    referencedColumnName: id
+        tbsystemuser:
+            targetEntity: TBSystemUser
+            inversedBy: tbissues
+            joinColumns:
+                CreatedUserId:
+                    referencedColumnName: id
+    manyToMany: {  }

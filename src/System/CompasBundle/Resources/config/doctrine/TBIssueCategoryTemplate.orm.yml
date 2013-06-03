@@ -1,0 +1,19 @@
+System\CompasBundle\Entity\TBIssueCategoryTemplate:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        Name:
+            type: string
+            length: 255
+            nullable: true
+    oneToMany:
+        tbissuecategorytemplatedetails:
+            targetEntity: TBIssueCategoryTemplateDetail
+            mappedBy: tbissuecategorytemplate
+    manyToOne: {  }
+    manyToMany: {  }

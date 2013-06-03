@@ -1,0 +1,52 @@
+{% extends "::base.html.twig" %}
+{% form_theme form 'pingdecopongFormFreezeBundle:Form:form_layout.html.twig' %}
+
+{% block title %}ユーザ情報　新規作成{% endblock %}
+
+{% block body %}
+    <h1>ユーザ新規作成</h1>
+    <form action="{{ path('systemuser_new') }}" method="post" {{ form_enctype(form) }} novalidate name="systemuser_new">
+
+        {{ form_widget(form) }}
+        <p>
+            {% if mode == "input" %}
+                <button onclick="postConfirm()">確認</button>
+            {% elseif mode == "confirm" %}
+                <button onclick="postReturn()">戻る</button>
+                <button onclick="postSubmit()">登録</button>
+            {% endif %}
+        </p>
+
+
+
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        //<![CDATA[
+        function postReturn(){
+            document.systemuser_new.{{ form.buttonAction.vars.id }}.value = "";
+            document.systemuser_new.submit();
+        }
+        function postConfirm(){
+            document.systemuser_new.{{ form.buttonAction.vars.id }}.value = "confirm";
+            document.systemuser_new.submit();
+        }
+        function postSubmit(){
+            document.systemuser_new.{{ form.buttonAction.vars.id }}.value = "submit";
+            document.systemuser_new.submit();
+        }
+        function changeCompany(){
+            document.systemuser_new.{{ form.department.vars.id }}.value = "";
+//            {{ form.department.vars.id }}
+            postBack();
+        }
+        function postBack(){
+            document.systemuser_new.action = "{{ path('systemuser_new') }}";
+            document.systemuser_new.{{ form.buttonAction.vars.id }}.value = "";
+            document.systemuser_new.submit();
+        }
+        //]]>
+    </script>
+{% endblock %}

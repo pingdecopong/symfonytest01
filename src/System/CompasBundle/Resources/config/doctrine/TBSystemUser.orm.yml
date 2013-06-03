@@ -1,0 +1,106 @@
+System\CompasBundle\Entity\TBSystemUser:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        ContractId:
+            type: integer
+            nullable: true
+        LoginId:
+            type: string
+            length: 40
+            nullable: true
+        Salt:
+            type: string
+            length: 40
+            nullable: true
+        Password:
+            type: string
+            length: 40
+            nullable: true
+        Active:
+            type: boolean
+            nullable: true
+        SystemRoleId:
+            type: integer
+            nullable: true
+        DisplayName:
+            type: string
+            length: 50
+            nullable: true
+        DisplayNameKana:
+            type: string
+            length: 50
+            nullable: true
+        NickName:
+            type: string
+            length: 50
+            nullable: true
+        MailAddress:
+            type: string
+            length: 100
+            nullable: true
+        CompanyId:
+            type: integer
+            nullable: true
+        DepartmentId:
+            type: integer
+            nullable: true
+        LastLoginDatetime:
+            type: datetime
+            nullable: true
+        DeleteFlug:
+            type: boolean
+            nullable: true
+        CreatedDatetime:
+            type: datetime
+            nullable: true
+        UpdatedDatetime:
+            type: datetime
+            nullable: true
+    oneToMany:
+        tbprojectenters:
+            targetEntity: TBProjectEnter
+            mappedBy: tbsystemuser
+        tbissues:
+            targetEntity: TBIssue
+            mappedBy: tbsystemuser
+        tbissuereplys:
+            targetEntity: TBIssueReply
+            mappedBy: tbsystemuser
+        tbissuefiles:
+            targetEntity: TBIssueFile
+            mappedBy: tbsystemuser
+        tbdocuments:
+            targetEntity: TBDocument
+            mappedBy: tbsystemuser
+        tbdocumnetphysicalfiles:
+            targetEntity: TBDocumnetPhysicalFile
+            mappedBy: tbsystemuser
+        tbinformations:
+            targetEntity: TBInformation
+            mappedBy: tbsystemuser
+    manyToOne:
+        tbcontract:
+            targetEntity: TBContract
+            inversedBy: tbsystemusers
+            joinColumns:
+                ContractId:
+                    referencedColumnName: id
+        tbcompany:
+            targetEntity: TBCompany
+            inversedBy: tbsystemusers
+            joinColumns:
+                CompanyId:
+                    referencedColumnName: id
+        tbdepartment:
+            targetEntity: TBDepartment
+            inversedBy: tbsystemusers
+            joinColumns:
+                DepartmentId:
+                    referencedColumnName: id
+    manyToMany: {  }

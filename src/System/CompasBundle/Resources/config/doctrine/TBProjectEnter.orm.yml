@@ -1,0 +1,42 @@
+System\CompasBundle\Entity\TBProjectEnter:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        ProjectId:
+            type: integer
+            nullable: false
+        SystemuserId:
+            type: integer
+            nullable: false
+        RoleNo:
+            type: integer
+            nullable: true
+    oneToMany:
+        tbreplyusers:
+            targetEntity: TBReplyUser
+            mappedBy: tbprojectenter
+        tbissueviewhistorys:
+            targetEntity: TBIssueViewHistory
+            mappedBy: tbprojectenter
+        tbinformationviewhistorys:
+            targetEntity: TBInformationViewHistory
+            mappedBy: tbprojectenter
+    manyToOne:
+        tbsystemuser:
+            targetEntity: TBSystemUser
+            inversedBy: tbprojectenters
+            joinColumns:
+                ProjectId:
+                    referencedColumnName: id
+        tbproject:
+            targetEntity: TBProject
+            inversedBy: tbprojectenters
+            joinColumns:
+                SystemuserId:
+                    referencedColumnName: id
+    manyToMany: {  }

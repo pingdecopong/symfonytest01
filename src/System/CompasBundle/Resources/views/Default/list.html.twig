@@ -1,0 +1,121 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}ユーザ　一覧{% endblock %}
+
+{% block body %}
+    <h1>ユーザ一覧</h1>
+
+    <form action="{{ path('systemuser_list_search') }}" method="post" {{ form_enctype(search_form) }} novalidate >
+        <h3>検索</h3>
+        <div>
+            {{ form_errors(search_form) }}
+
+            {{ form_label(search_form.search.name) }}
+            {{ form_errors(search_form.search.name) }}
+            {{ form_widget(search_form.search.name) }}
+
+            {{ form_rest(search_form.search) }}
+            {{ form_rest(search_form.list) }}
+
+            <p>
+                <button type="submit">検索</button>
+            </p>
+        </div>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                {% for header in list.sort %}
+                    <th>
+                        {% if header.sortflug %}
+                        <a href="{{ header.query }}">
+                            {{ header.label }}
+                            {% if header.sort_type == 'asc' %}
+                                ↓
+                            {% elseif header.sort_type == 'desc' %}
+                                ↑
+                            {% endif %}
+                        </a>
+                        {% else %}
+                            {{ header.label }}
+                        {% endif %}
+                    </th>
+                {% endfor %}
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('systemuser_show', {'id': entity.id}) }}">{{ entity.id }}</a> </td>
+                <td>{{ entity.DisplayName }}</td>
+                <td></td>
+                <td></td>
+                <td>{{ entity.CreatedDatetime|date("Y/m/d") }}</td>
+                <td>{{ entity.SystemRoleId }}</td>
+                <td>
+                    {% if entity.Active %}
+                        有効
+                    {% else %}
+                        無効
+                    {% endif %}
+                </td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('systemuser_show', { 'id': entity.id }) }}">表示</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('systemuser_edit', { 'id': entity.id }) }}">編集</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div>
+    {% for page in list.paging %}
+        {% if page.is_select %}
+            {{ page.label }}
+        {% else %}
+            <a href="{{ page.query }}">{{ page.label }}</a>
+        {% endif %}
+    {% endfor %}
+    </div>
+
+    <div>
+        <form name="pagesizeform">
+            <select name="select" onChange="jump()">
+                {% for page_size in list.paging_size %}
+                    {% if page_size.is_select %}
+                        <option value="{{ page_size.query }}" selected >{{ page_size.label }}</option>
+                    {% else %}
+                        <option value="{{ page_size.query }}" >{{ page_size.label }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+
+    <ul>
+        <li>
+            <a href="{{ path('systemuser_new3') }}">新規作成</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        //<![CDATA[
+        function jump(){
+
+            var si = document.pagesizeform.select.selectedIndex;
+            var url = document.pagesizeform.select.options[si].value;
+            location.href = url;
+        }
+        //]]>
+    </script>
+{% endblock %}

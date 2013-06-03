@@ -1,0 +1,12 @@
+System\CompasBundle\Entity\TBSystemUserLog:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields: {  }
+    oneToMany: {  }
+    manyToOne: {  }
+    manyToMany: {  }

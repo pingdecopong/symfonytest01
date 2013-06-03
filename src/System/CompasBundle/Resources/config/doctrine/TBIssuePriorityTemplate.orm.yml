@@ -1,0 +1,19 @@
+System\CompasBundle\Entity\TBIssuePriorityTemplate:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        Name:
+            type: string
+            length: 255
+            nullable: true
+    oneToMany:
+        tbissueprioritytemplatedetails:
+            targetEntity: TBIssuePriorityTemplateDetail
+            mappedBy: tbissueprioritytemplate
+    manyToOne: {  }
+    manyToMany: {  }

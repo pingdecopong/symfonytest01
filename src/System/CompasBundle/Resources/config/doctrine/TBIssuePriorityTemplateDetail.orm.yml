@@ -1,0 +1,36 @@
+System\CompasBundle\Entity\TBIssuePriorityTemplateDetail:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        IssuePriorityTemplateId:
+            type: integer
+            nullable: true
+        Name:
+            type: string
+            length: 255
+            nullable: true
+        Description:
+            type: string
+            length: 255
+            nullable: true
+        IconFileName:
+            type: string
+            length: 255
+            nullable: true
+        SortNo:
+            type: integer
+            nullable: true
+    oneToMany: {  }
+    manyToOne:
+        tbissueprioritytemplate:
+            targetEntity: TBIssuePriorityTemplate
+            inversedBy: tbissueprioritytemplatedetails
+            joinColumns:
+                IssuePriorityTemplateId:
+                    referencedColumnName: id
+    manyToMany: {  }

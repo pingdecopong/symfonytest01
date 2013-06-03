@@ -1,0 +1,49 @@
+System\CompasBundle\Entity\TBInformation:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        ProjectId:
+            type: integer
+            nullable: true
+        Title:
+            type: string
+            length: 255
+            nullable: true
+        Body:
+            type: text
+            nullable: true
+        DisplayPeriod:
+            type: datetime
+            nullable: true
+        CreatedDatetime:
+            type: datetime
+            nullable: true
+        UpdatedDatetime:
+            type: datetime
+            nullable: true
+        CreatedUserId:
+            type: integer
+            nullable: true
+    oneToMany:
+        tbinformationviewhistorys:
+            targetEntity: TBInformationViewHistory
+            mappedBy: tbinformation
+    manyToOne:
+        tbproject:
+            targetEntity: TBProject
+            inversedBy: tbinformations
+            joinColumns:
+                ProjectId:
+                    referencedColumnName: id
+        tbsystemuser:
+            targetEntity: TBSystemUser
+            inversedBy: tbinformations
+            joinColumns:
+                CreatedUserId:
+                    referencedColumnName: id
+    manyToMany: {  }

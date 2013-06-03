@@ -1,0 +1,30 @@
+System\CompasBundle\Entity\TBDocumentIssueLink:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        IssueReplyId:
+            type: integer
+            nullable: false
+        DocumnetPhysicalFileId:
+            type: integer
+            nullable: true
+    oneToMany: {  }
+    manyToOne:
+        tbissuereply:
+            targetEntity: TBIssueReply
+            inversedBy: tbdocumentissuelinks
+            joinColumns:
+                IssueReplyId:
+                    referencedColumnName: id
+        tbdocumnetphysicalfile:
+            targetEntity: TBDocumnetPhysicalFile
+            inversedBy: tbdocumentissuelinks
+            joinColumns:
+                DocumnetPhysicalFileId:
+                    referencedColumnName: id
+    manyToMany: {  }

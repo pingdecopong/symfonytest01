@@ -1,0 +1,59 @@
+System\CompasBundle\Entity\TBDocument:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        ProjectId:
+            type: integer
+            nullable: true
+        DocumentCategoryId:
+            type: integer
+            nullable: true
+        Title:
+            type: string
+            length: 100
+            nullable: true
+        Description:
+            type: string
+            length: 255
+            nullable: true
+        DeleteFlug:
+            type: boolean
+            nullable: true
+        CreatedDatetime:
+            type: datetime
+            nullable: true
+        UpdatedDatetime:
+            type: datetime
+            nullable: true
+        CreatedUserId:
+            type: integer
+            nullable: true
+    oneToMany:
+        tbdocumentfiles:
+            targetEntity: TBDocumentFile
+            mappedBy: tbdocument
+    manyToOne:
+        tbproject:
+            targetEntity: TBProject
+            inversedBy: tbdocuments
+            joinColumns:
+                ProjectId:
+                    referencedColumnName: id
+        tbdocumentcategory:
+            targetEntity: TBDocumentCategory
+            inversedBy: tbdocuments
+            joinColumns:
+                DocumentCategoryId:
+                    referencedColumnName: id
+        tbsystemuser:
+            targetEntity: TBSystemUser
+            inversedBy: tbdocuments
+            joinColumns:
+                CreatedUserId:
+                    referencedColumnName: id
+    manyToMany: {  }

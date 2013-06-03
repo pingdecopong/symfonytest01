@@ -1,0 +1,51 @@
+System\CompasBundle\Entity\TBIssueFile:
+    type: entity
+    indexes: {  }
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        IssueReplyId:
+            type: integer
+            nullable: true
+        FileName:
+            type: string
+            length: 255
+            nullable: true
+        PhysicalFileName:
+            type: string
+            length: 255
+            nullable: true
+        Comment:
+            type: string
+            length: 255
+            nullable: true
+        DeleteFlug:
+            type: boolean
+            nullable: true
+        CreatedDatetime:
+            type: datetime
+            nullable: true
+        UpdatedDatetime:
+            type: datetime
+            nullable: true
+        CreatedUserId:
+            type: integer
+            nullable: true
+    oneToMany: {  }
+    manyToOne:
+        tbissuereply:
+            targetEntity: TBIssueReply
+            inversedBy: tbissuefiles
+            joinColumns:
+                IssueReplyId:
+                    referencedColumnName: id
+        tbsystemuser:
+            targetEntity: TBSystemUser
+            inversedBy: tbissuefiles
+            joinColumns:
+                CreatedUserId:
+                    referencedColumnName: id
+    manyToMany: {  }
