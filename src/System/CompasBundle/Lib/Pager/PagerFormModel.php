@@ -12,22 +12,14 @@ namespace System\CompasBundle\Lib\Pager;
 
 class PagerFormModel implements PagerFormModelInterface {
 
-    /**
-     * @var integer
-     * @Assert\Type(type="numeric")
-     */
     protected $pageNo;
 
-    /**
-     * @var integer
-     * @Assert\Type(type="numeric")
-     */
     protected $pageSize;
 
     function __construct()
     {
-        $this->pageNo = 1;
-        $this->pageSize = 10;
+//        $this->pageNo = 1;
+//        $this->pageSize = 10;
     }
 
     public function setPageNo($pageNo)

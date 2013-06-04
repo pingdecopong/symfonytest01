@@ -10,7 +10,7 @@
         {{ form_widget(form) }}
 
         <div>
-            {% for page in pager.pager_list_row %}
+            {% for page in pager.pager_list.Rows %}
                 {% if page.select %}
                     {{ page.label }}
                 {% else %}

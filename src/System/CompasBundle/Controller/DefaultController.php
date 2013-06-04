@@ -245,6 +245,7 @@ class DefaultController extends Controller
                 }
             }else
             {
+                //ドロップダウンなどのポストバック
                 $builder->setAttribute('novalidation', true);
                 $form = $builder->getForm();
             }
@@ -299,10 +300,15 @@ class DefaultController extends Controller
             ),
         );
 
-        $pagerList->setAllCount(count($data));
+//        $pagerList->setAllCount(count($data));
+        $pagerList->setAllCount(38);
 
         $pagerForm = $pagerList->getForm();
 
+//        if($request->isMethod('POST'))
+//        {
+            $pagerForm->bind($request);
+//        }
 
         return array(
             'form' => $pagerForm->createView(),

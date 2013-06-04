@@ -11,6 +11,8 @@ namespace System\CompasBundle\Lib\Pager;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PagerFormType extends AbstractType
@@ -22,6 +24,22 @@ class PagerFormType extends AbstractType
             ))
             ->add('pageSize', 'hidden', array(
             ))
+            ->addEventListener(FormEvents::PRE_BIND, function(FormEvent $event){
+                $form = $event->getForm();
+                $data = $event->getData();
+
+                if(empty($data['pageNo']))
+                {
+                    $data['pageNo'] = 1;
+                }
+
+                if(empty($data['pageSize']))
+                {
+                    $data['pageSize'] = 10;
+                }
+
+                $event->setData($data);
+            })
         ;
     }
 

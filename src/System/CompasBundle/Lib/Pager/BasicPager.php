@@ -30,7 +30,7 @@ class BasicPager implements PagerInterface {
 
     public function getForm()
     {
-        $formBuilder = $this->formFactory->createBuilder($this->formType, $this->formModel);
+        $formBuilder = $this->formFactory->createBuilder($this->formType, $this->formModel, array('csrf_protection' => false));
         $this->form = $formBuilder->getForm();
         return $this->form;
     }
@@ -53,6 +53,7 @@ class BasicPager implements PagerInterface {
     public function setPageNo($pageNo)
     {
         $this->formModel->setPageNo($pageNo);
+//        $this->form->setData($this->formModel);
     }
     public function getPageSize()
     {
@@ -61,6 +62,7 @@ class BasicPager implements PagerInterface {
     public function setPageSize($pageSize)
     {
         $this->formModel->setPageSize($pageSize);
+//        $this->form->setData($this->formModel);
     }
     //endregion
 
@@ -76,7 +78,15 @@ class BasicPager implements PagerInterface {
 
         $pagerView = array();
 
+        //
+        $pageListView = new BasicPagerPageListView();
+        $pageListView->setAllCount($this->allCount);
+        $pageListView->setPageNo($this->getPageNo());
+        $pageListView->setPageSize($this->getPageSize());
+        $pageListView->createView();
 
+
+/*
         $allDataCount = $this->getAllCount();
         $pageSize = $this->getPageSize();
         $totalNum = $allDataCount/$pageSize;
@@ -106,11 +116,132 @@ class BasicPager implements PagerInterface {
 
             $pagerListRows[$i] = $row;
         }
+*/
 
-
-        $pagerView['pager_list_row'] = $pagerListRows;
+        $pagerView['pager_list'] = $pageListView;
         return $pagerView;
     }
+}
+
+
+interface PagerPageListViewInterface{
+    public function setAllCount($allCount);
+    public function getAllCount();
+    public function setPageNo($pageNo);
+    public function getPageNo();
+    public function setPageSize($pageSize);
+    public function getPageSize();
+
+    public function getRows();
+    public function createView();
+}
+
+class BasicPagerPageListView implements PagerPageListViewInterface{
+
+    private $allCount;
+    private $pageNo;
+    private $pageSize;
+    private $rows;
+
+    function __construct()
+    {
+        $this->rows = array();
+    }
+
+    /**
+     * @param mixed $allCount
+     */
+    public function setAllCount($allCount)
+    {
+        $this->allCount = $allCount;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAllCount()
+    {
+        return $this->allCount;
+    }
+
+    /**
+     * @param mixed $pageNo
+     */
+    public function setPageNo($pageNo)
+    {
+        $this->pageNo = $pageNo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPageNo()
+    {
+        return $this->pageNo;
+    }
+
+    /**
+     * @param mixed $pageSize
+     */
+    public function setPageSize($pageSize)
+    {
+        $this->pageSize = $pageSize;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPageSize()
+    {
+        return $this->pageSize;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRows()
+    {
+        return $this->rows;
+    }
+
+    public function createView()
+    {
+        $totalNum = $this->allCount/$this->pageSize;
+        if($this->allCount % $this->pageSize != 0){
+            $totalNum++;
+        }
+
+        for($i=0; $i<$totalNum; $i++)
+        {
+            $row = new PagerPageListRowView();
+
+            //表示
+            $row->setLabel($i + 1);
+
+            //ページ番号
+            $row->setPageNo($i + 1);
+
+            //選択状態
+            if($this->pageNo == $i+1){
+                $row->setSelect(true);
+            }else{
+                $row->setSelect(false);
+            }
+
+            $this->rows[$i] = $row;
+        }
+
+    }
+}
+
+
+interface PagerPageListRowViewInterface{
+    public function getLabel();
+    public function setLabel($label);
+    public function getPageNo();
+    public function setPageNo($pageNo);
+    public function getSelect();
+    public function setSelect($select);
 }
 
 class PagerPageListRowView implements PagerPageListRowViewInterface{
@@ -170,14 +301,6 @@ class PagerPageListRowView implements PagerPageListRowViewInterface{
 
 }
 
-interface PagerPageListRowViewInterface{
-    public function getLabel();
-    public function setLabel($label);
-    public function getPageNo();
-    public function setPageNo($pageNo);
-    public function getSelect();
-    public function setSelect($select);
-}
 
 
 
@@ -185,14 +308,7 @@ interface PagerPageListRowViewInterface{
 
 
 
-interface PagerPageListViewInterface{
-//    public function get
 
-}
-
-class BasicPagerPageListView implements PagerPageListViewInterface{
-
-}
 
 interface PagerPageSizeViewInterface{
 
