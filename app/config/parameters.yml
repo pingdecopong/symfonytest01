@@ -2,13 +2,13 @@ parameters:
     database_driver: pdo_mysql
     database_host: localhost
     database_port: null
-    database_name: symfony22_1
+    database_name: compas2
     database_user: root
-    database_password: root
+    database_password: null
     mailer_transport: smtp
     mailer_host: 127.0.0.1
     mailer_user: null
     mailer_password: null
     locale: en
-    secret: a0edae0ca88fd85867133024aaea48fd737b257d
+    secret: 1559dce55397a84257de10652b3a6a6ef
     database_path: null
