@@ -10,6 +10,8 @@
 namespace System\CompasBundle\Lib\Pager;
 
 
+use Symfony\Component\Form\FormFactory;
+
 class BasicPager implements PagerInterface {
 
     private $form;
@@ -85,6 +87,10 @@ class BasicPager implements PagerInterface {
         $pageListView->setPageSize($this->getPageSize());
         $pageListView->createView();
 
+        //
+        $pageSizeView = new BasicPagerPageSizeView($this->formFactory);
+        $pageSizeView->createView();
+
 
 /*
         $allDataCount = $this->getAllCount();
@@ -119,6 +125,7 @@ class BasicPager implements PagerInterface {
 */
 
         $pagerView['pager_list'] = $pageListView;
+        $pagerView['pager_size'] = $pageSizeView;
         return $pagerView;
     }
 }
@@ -148,6 +155,7 @@ class BasicPagerPageListView implements PagerPageListViewInterface{
         $this->rows = array();
     }
 
+    //region geter setter
     /**
      * @param mixed $allCount
      */
@@ -203,6 +211,7 @@ class BasicPagerPageListView implements PagerPageListViewInterface{
     {
         return $this->rows;
     }
+    //endregion
 
     public function createView()
     {
@@ -310,10 +319,58 @@ class PagerPageListRowView implements PagerPageListRowViewInterface{
 
 
 
-interface PagerPageSizeViewInterface{
+interface PagerPageSizeViewInterface
+{
+    public function setSizeList($sizeList);
+    public function getSizeList();
 
+    public function createView();
 }
 
-class BasicPagerPageSizeView implements PagerPageSizeViewInterface {
+class BasicPagerPageSizeView implements PagerPageSizeViewInterface
+{
+    public $sizeList;
+    public $formFactory;
+    public $formView;
 
+    /**
+     * @param mixed $sizeList
+     */
+    public function setSizeList($sizeList)
+    {
+        $this->sizeList = $sizeList;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSizeList()
+    {
+        return $this->sizeList;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFormView()
+    {
+        return $this->formView;
+    }
+
+    function __construct(FormFactory $formFactory)
+    {
+        $this->sizeList = array();
+        $this->formFactory = $formFactory;
+    }
+
+    public function createView()
+    {
+        $formBuilder = $this->formFactory->createBuilder();
+        $form = $formBuilder->add('pagesize', 'text')
+            ->getForm();
+
+        $formView = $form->createView();
+        $this->formView = $formView->children['pagesize'];
+        $this->formView->vars['full_name'] = '';
+    }
 }

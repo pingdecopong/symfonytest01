@@ -18,6 +18,9 @@
                 {% endif %}
             {% endfor %}
         </div>
+        <div>
+            {{ form_widget(pager.pager_size.FormView) }}
+        </div>
 
     </form>
 {% endblock %}
