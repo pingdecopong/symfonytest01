@@ -19,7 +19,8 @@ use System\CompasBundle\Form\SystemUser\SystemUserSearchFormType2;
 use System\CompasBundle\Form\Type\ListFormModel;
 use System\CompasBundle\Form\Type\ListFormType;
 use System\CompasBundle\Lib\CompanyMng;
-use System\CompasBundle\Lib\Pager\BasicPager;
+//use System\CompasBundle\Lib\Pager\BasicPager;
+use System\CompasBundle\Lib\Pager\BasicPager\BasicPager;
 use System\CompasBundle\Lib\PagerList\BasicPagerList;
 use System\CompasBundle\Lib\SystemUser;
 use System\CompasBundle\Lib\SystemUserManager;
@@ -312,7 +313,7 @@ class DefaultController extends Controller
 
         return array(
             'form' => $pagerForm->createView(),
-            'pager' => $pagerList->createView(),
+//            'pager' => $pagerList->createView(),
         );
     }
 

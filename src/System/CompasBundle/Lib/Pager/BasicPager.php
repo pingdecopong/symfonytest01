@@ -28,12 +28,18 @@ class BasicPager implements PagerInterface {
         $this->formFactory = $formFactory;
         $this->formModel = new PagerFormModel();
         $this->formType = new PagerFormType();
+
+//        $pageListView = new BasicPagerPageListView();
+    }
+
+    public function buildForm()
+    {
+        $formBuilder = $this->formFactory->createBuilder($this->formType, $this->formModel, array('csrf_protection' => false));
+        $this->form = $formBuilder->getForm();
     }
 
     public function getForm()
     {
-        $formBuilder = $this->formFactory->createBuilder($this->formType, $this->formModel, array('csrf_protection' => false));
-        $this->form = $formBuilder->getForm();
         return $this->form;
     }
 
@@ -89,6 +95,11 @@ class BasicPager implements PagerInterface {
 
         //
         $pageSizeView = new BasicPagerPageSizeView($this->formFactory);
+        $pageSizeView->setSizeList(array(
+            '10' => '10',
+            '20' => '20',
+            '50' => '50',
+        ));
         $pageSizeView->createView();
 
 
@@ -131,19 +142,91 @@ class BasicPager implements PagerInterface {
 }
 
 
-interface PagerPageListViewInterface{
-    public function setAllCount($allCount);
-    public function getAllCount();
-    public function setPageNo($pageNo);
-    public function getPageNo();
-    public function setPageSize($pageSize);
-    public function getPageSize();
+class BasicPagerPageList{
 
-    public function getRows();
-    public function createView();
+    private $allCount;
+    private $pageNo;
+    private $pageSize;
+
+    //region geter setter
+    /**
+     * @param mixed $allCount
+     */
+    public function setAllCount($allCount)
+    {
+        $this->allCount = $allCount;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAllCount()
+    {
+        return $this->allCount;
+    }
+
+    /**
+     * @param mixed $pageNo
+     */
+    public function setPageNo($pageNo)
+    {
+        $this->pageNo = $pageNo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPageNo()
+    {
+        return $this->pageNo;
+    }
+
+    /**
+     * @param mixed $pageSize
+     */
+    public function setPageSize($pageSize)
+    {
+        $this->pageSize = $pageSize;
+    }
+    //endregion
+
+    public function createView()
+    {
+        $view = new BasicPagerPageListView();
+        $view->setAllCount($this->allCount);
+        $view->setPageNo($this->pageNo);
+        $view->setPageSize($this->pageSize);
+
+        $totalNum = $this->allCount/$this->pageSize;
+        if($this->allCount % $this->pageSize != 0){
+            $totalNum++;
+        }
+
+        for($i=0; $i<$totalNum; $i++)
+        {
+            $row = new PagerPageListRowView();
+
+            //表示
+            $row->setLabel($i + 1);
+
+            //ページ番号
+            $row->setPageNo($i + 1);
+
+            //選択状態
+            if($this->pageNo == $i+1){
+                $row->setSelect(true);
+            }else{
+                $row->setSelect(false);
+            }
+
+            $this->rows[$i] = $row;
+        }
+
+    }
+
 }
 
-class BasicPagerPageListView implements PagerPageListViewInterface{
+class BasicPagerPageListView{
 
     private $allCount;
     private $pageNo;
@@ -213,34 +296,7 @@ class BasicPagerPageListView implements PagerPageListViewInterface{
     }
     //endregion
 
-    public function createView()
-    {
-        $totalNum = $this->allCount/$this->pageSize;
-        if($this->allCount % $this->pageSize != 0){
-            $totalNum++;
-        }
 
-        for($i=0; $i<$totalNum; $i++)
-        {
-            $row = new PagerPageListRowView();
-
-            //表示
-            $row->setLabel($i + 1);
-
-            //ページ番号
-            $row->setPageNo($i + 1);
-
-            //選択状態
-            if($this->pageNo == $i+1){
-                $row->setSelect(true);
-            }else{
-                $row->setSelect(false);
-            }
-
-            $this->rows[$i] = $row;
-        }
-
-    }
 }
 
 
@@ -366,7 +422,13 @@ class BasicPagerPageSizeView implements PagerPageSizeViewInterface
     public function createView()
     {
         $formBuilder = $this->formFactory->createBuilder();
-        $form = $formBuilder->add('pagesize', 'text')
+        $form = $formBuilder->add('pagesize', 'choice', array(
+            'choices' => $this->sizeList,
+            'required' => true,
+            'attr' => array(
+                'onChange' => 'javascript:changePageSize();',
+            ),
+        ))
             ->getForm();
 
         $formView = $form->createView();
