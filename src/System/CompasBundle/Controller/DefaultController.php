@@ -20,7 +20,9 @@ use System\CompasBundle\Form\Type\ListFormModel;
 use System\CompasBundle\Form\Type\ListFormType;
 use System\CompasBundle\Lib\CompanyMng;
 //use System\CompasBundle\Lib\Pager\BasicPager;
+use System\CompasBundle\Lib\Pager\BasicColumn\BasicColumn;
 use System\CompasBundle\Lib\Pager\BasicPager\BasicPager;
+use System\CompasBundle\Lib\Pager\PagerList\PagerList;
 use System\CompasBundle\Lib\PagerList\BasicPagerList;
 use System\CompasBundle\Lib\SystemUser;
 use System\CompasBundle\Lib\SystemUserManager;
@@ -313,7 +315,68 @@ class DefaultController extends Controller
 
         return array(
             'form' => $pagerForm->createView(),
-//            'pager' => $pagerList->createView(),
+            'pager' => $pagerList->createView(),
+        );
+    }
+
+    /**
+     * リスト
+     *
+     * @Route("/list3", name="systemuser_list3")
+     * @Template()
+     */
+    public function list3Action(Request $request)
+    {
+        $formFactory = $this->get('form.factory');
+        $basicColumn = new BasicColumn($formFactory);
+
+        $data = array(
+            array(
+                'id' => 1,
+                'name' => 'yamada tarou'
+            ),
+            array(
+                'id' => 2,
+                'name' => 'tanaka ichirou1'
+            ),
+            array(
+                'id' => 3,
+                'name' => 'tanaka ichirou2'
+            ),
+            array(
+                'id' => 4,
+                'name' => 'tanaka ichirou3'
+            ),
+            array(
+                'id' => 5,
+                'name' => 'tanaka ichirou4'
+            ),
+            array(
+                'id' => 6,
+                'name' => 'tanaka ichirou5'
+            ),
+        );
+
+        $basicColumn
+            ->addColumn('id', array(
+                'label' => 'ID',
+                'key' => 'id',
+                'sort_enable' => true,
+            ))
+            ->addColumn('name', array(
+                'label' => 'NAME',
+                'key' => 'name',
+                'sort_enable' => true,
+            ));
+
+        $columnForm = $basicColumn->getForm();
+        $columnForm->bind($request);
+
+
+
+        return array(
+            'form' => $columnForm->createView(),
+            'column' => $basicColumn->createView(),
         );
     }
 

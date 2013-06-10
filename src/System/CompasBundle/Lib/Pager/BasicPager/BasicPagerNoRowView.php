@@ -2,15 +2,15 @@
 /**
  * Created by JetBrains PhpStorm.
  * User: fhirashima
- * Date: 13/06/07
- * Time: 16:09
+ * Date: 13/06/10
+ * Time: 11:36
  * To change this template use File | Settings | File Templates.
  */
 
-namespace System\CompasBundle\Lib\Pager\BasicPager\PageNo;
+namespace System\CompasBundle\Lib\Pager\BasicPager;
 
 
-class PageNoListRowView {
+class BasicPagerNoRowView {
 
     private $label;
     private $pageNo;
@@ -63,7 +63,5 @@ class PageNoListRowView {
     {
         return $this->select;
     }
-
-
 
 }

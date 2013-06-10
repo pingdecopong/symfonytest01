@@ -2,15 +2,15 @@
 /**
  * Created by JetBrains PhpStorm.
  * User: fhirashima
- * Date: 13/06/07
- * Time: 16:06
+ * Date: 13/06/10
+ * Time: 17:40
  * To change this template use File | Settings | File Templates.
  */
 
-namespace System\CompasBundle\Lib\Pager\BasicPager\PageNo;
+namespace System\CompasBundle\Lib\Pager\BasicColumn;
 
 
-class PageNoListView {
+class BasicColumnView {
 
     private $rows;
 
@@ -19,12 +19,9 @@ class PageNoListView {
         $this->rows = array();
     }
 
-    /**
-     * @param \System\CompasBundle\Lib\Pager\BasicPager\PageNo\PageNoListRowView $rows
-     */
-    public function addRows(PageNoListRowView $rows)
+    public function addRows(BasicColumnRowView $row)
     {
-        $this->rows[] = $rows;
+        $this->rows[] = $row;
     }
 
     /**
@@ -34,6 +31,5 @@ class PageNoListView {
     {
         return $this->rows;
     }
-
 
 }

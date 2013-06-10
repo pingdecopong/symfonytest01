@@ -1,23 +1,42 @@
 {% extends "::base.html.twig" %}
 {% form_theme form 'pingdecopongFormFreezeBundle:Form:form_layout.html.twig' %}
 
-{% block title %}ユーザ情報　一覧{% endblock %}
+{% block title %}ユーザ情報　一覧3{% endblock %}
 
 {% block body %}
-    <h1>ユーザ一覧</h1>
-    <form action="{{ path('systemuser_list2') }}" method="get" {{ form_enctype(form) }} novalidate name="systemuser_list2">
+    <h1>ユーザ一覧3</h1>
+    <form action="{{ path('systemuser_list3') }}" method="get" {{ form_enctype(form) }} novalidate name="systemuser_list3">
 
         {{ form_widget(form) }}
 
-        <div>
-            {% for page in pager.PageNo.Rows %}
-                {% if page.select %}
-                    {{ page.label }}
-                {% else %}
-                    <a href="#" onclick="pagenoClick({{ page.pageNo }})">{{ page.label }}</a>
-                {% endif %}
-            {% endfor %}
-        </div>
+
+        <table>
+            <thead>
+            <tr>
+                {% for header in column.Rows %}
+                    <th>
+                        {% if header.Enable %}
+                            <a href="#">
+                                {{ header.label }}
+                                {% if header.SortType == 'asc' %}
+                                    ↓
+                                {% elseif header.SortType == 'desc' %}
+                                    ↑
+                                {% endif %}
+                            </a>
+                        {% else %}
+                            {{ header.label }}
+                        {% endif %}
+                    </th>
+                {% endfor %}
+
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
 
 {#
         <div>
@@ -52,16 +71,9 @@
              document.systemuser_list2.submit();
          }
          #}
-        function pagenoClick(pageno){
-            document.systemuser_list2.{{ form.pageNo.vars.id }}.value = pageno;
-            document.systemuser_list2.submit();
-        }
-        function changePageSize(){
-            document.systemuser_list2.{{ form.pageNo.vars.id }}.value = 1;
-            document.systemuser_list2.submit();
-        }
+
         function postBack(){
-            document.systemuser_list2.submit();
+            document.systemuser_list3.submit();
         }
         //]]>
     </script>

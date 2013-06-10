@@ -2,29 +2,20 @@
 /**
  * Created by JetBrains PhpStorm.
  * User: fhirashima
- * Date: 13/06/07
- * Time: 17:42
+ * Date: 13/06/10
+ * Time: 11:02
  * To change this template use File | Settings | File Templates.
  */
 
 namespace System\CompasBundle\Lib\Pager\BasicPager;
 
 
-
-
-class BasicPagerView {
-
-    /**
-     * @var BasicPagerNoView
-     */
-    private $pageNo;
-    /**
-     * @var BasicPagerSizeView
-     */
-    private $pageSize;
+class BasicPagerFormModel {
+    private  $pageNo;
+    private  $pageSize;
 
     /**
-     * @param \System\CompasBundle\Lib\Pager\BasicPager\BasicPagerNoView $pageNo
+     * @param mixed $pageNo
      */
     public function setPageNo($pageNo)
     {
@@ -32,7 +23,7 @@ class BasicPagerView {
     }
 
     /**
-     * @return \System\CompasBundle\Lib\Pager\BasicPager\BasicPagerNoView
+     * @return mixed
      */
     public function getPageNo()
     {
@@ -40,7 +31,7 @@ class BasicPagerView {
     }
 
     /**
-     * @param \System\CompasBundle\Lib\Pager\BasicPager\BasicPagerSizeView $pageSize
+     * @param mixed $pageSize
      */
     public function setPageSize($pageSize)
     {
@@ -48,7 +39,7 @@ class BasicPagerView {
     }
 
     /**
-     * @return \System\CompasBundle\Lib\Pager\BasicPager\BasicPagerSizeView
+     * @return mixed
      */
     public function getPageSize()
     {
