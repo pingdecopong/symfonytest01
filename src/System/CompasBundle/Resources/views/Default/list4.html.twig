@@ -1,11 +1,11 @@
 {% extends "::base.html.twig" %}
 {% form_theme form 'pingdecopongFormFreezeBundle:Form:form_layout.html.twig' %}
 
-{% block title %}ユーザ情報　一覧3{% endblock %}
+{% block title %}ユーザ情報　一覧4{% endblock %}
 
 {% block body %}
-    <h1>ユーザ一覧3</h1>
-    <form action="{{ path('systemuser_list3') }}" method="get" {{ form_enctype(form) }} novalidate name="systemuser_list3">
+    <h1>ユーザ一覧4</h1>
+    <form action="{{ path('systemuser_list4') }}" method="get" {{ form_enctype(form) }} novalidate name="systemuser_list4">
 
         {{ form_widget(form) }}
 
@@ -82,12 +82,12 @@
          }
          #}
         function changeSortType(sortName, sortType){
-            document.systemuser_list3.{{ form.sortName.vars.id }}.value = sortName;
-            document.systemuser_list3.{{ form.sortType.vars.id }}.value = sortType;
-            document.systemuser_list3.submit();
+            document.systemuser_list4.{{ form.sortName.vars.id }}.value = sortName;
+            document.systemuser_list4.{{ form.sortType.vars.id }}.value = sortType;
+            document.systemuser_list4.submit();
         }
         function postBack(){
-            document.systemuser_list3.submit();
+            document.systemuser_list4.submit();
         }
         //]]>
     </script>

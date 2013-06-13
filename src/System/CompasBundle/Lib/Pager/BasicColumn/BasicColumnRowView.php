@@ -12,10 +12,27 @@ namespace System\CompasBundle\Lib\Pager\BasicColumn;
 
 class BasicColumnRowView {
 
+    private $keyName;
     private $label;
     private $enable;
     private $sortSelected;
     private $sortType;
+
+    /**
+     * @param mixed $keyName
+     */
+    public function setKeyName($keyName)
+    {
+        $this->keyName = $keyName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKeyName()
+    {
+        return $this->keyName;
+    }
 
     /**
      * @param mixed $label

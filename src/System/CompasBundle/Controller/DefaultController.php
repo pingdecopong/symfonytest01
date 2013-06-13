@@ -330,6 +330,39 @@ class DefaultController extends Controller
         $formFactory = $this->get('form.factory');
         $basicColumn = new BasicColumn($formFactory);
 
+        $basicColumn
+            ->addColumn('id', array(
+                'label' => 'ID',
+                'sort_enable' => false,
+            ))
+            ->addColumn('name', array(
+                'label' => '名称',
+                'sort_enable' => true,
+            ));
+
+        $columnForm = $basicColumn->getForm();
+        $columnForm->bind($request);
+
+
+
+        return array(
+            'form' => $columnForm->createView(),
+            'column' => $basicColumn->createView(),
+        );
+    }
+
+    /**
+     * リスト
+     *
+     * @Route("/list4", name="systemuser_list4")
+     * @Template()
+     */
+    public function list4Action(Request $request)
+    {
+        $formFactory = $this->get('form.factory');
+        $pagerList = new BasicPager($formFactory);
+        $basicColumn = new BasicColumn($formFactory);
+
         $data = array(
             array(
                 'id' => 1,
@@ -356,27 +389,28 @@ class DefaultController extends Controller
                 'name' => 'tanaka ichirou5'
             ),
         );
-
         $basicColumn
             ->addColumn('id', array(
                 'label' => 'ID',
-                'key' => 'id',
-                'sort_enable' => true,
+                'sort_enable' => false,
             ))
             ->addColumn('name', array(
-                'label' => 'NAME',
-                'key' => 'name',
+                'label' => '名称',
                 'sort_enable' => true,
             ));
 
-        $columnForm = $basicColumn->getForm();
-        $columnForm->bind($request);
 
+        $pagerList->setAllCount(38);
+
+        $pagerForm = $pagerList->getForm();
+
+
+        $pagerForm->bind($request);
 
 
         return array(
-            'form' => $columnForm->createView(),
-            'column' => $basicColumn->createView(),
+            'form' => $pagerForm->createView(),
+            'pager' => $pagerList->createView(),
         );
     }
 

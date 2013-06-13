@@ -12,6 +12,8 @@ namespace System\CompasBundle\Lib\Pager\BasicColumn;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class BasicColumnFormType extends AbstractType {
@@ -23,6 +25,17 @@ class BasicColumnFormType extends AbstractType {
             ))
             ->add('sortType', 'hidden', array(
             ))
+            ->addEventListener(FormEvents::PRE_BIND, function(FormEvent $event) {
+
+                $data = $event->getData();
+
+                if(!empty($data['sortName']) && empty($data['sortType']))
+                {
+                    $data['sortType'] = 'asc';
+                }
+
+                $event->setData($data);
+            })
         ;
     }
 

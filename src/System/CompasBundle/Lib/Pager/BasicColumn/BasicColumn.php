@@ -110,6 +110,9 @@ class BasicColumn {
         {
             $basicColumnRowView = new BasicColumnRowView();
 
+            //key
+            $basicColumnRowView->setKeyName($key);
+
             //表示名
             if(!empty($value['label'])){
                 $basicColumnRowView->setLabel($value['label']);
@@ -118,7 +121,7 @@ class BasicColumn {
             }
 
             //sort_enable
-            if(!empty($value['sort_enable'])){
+            if(isset($value['sort_enable'])){
                 $basicColumnRowView->setEnable($value['sort_enable']);
             }else{
                 $basicColumnRowView->setEnable(true);
