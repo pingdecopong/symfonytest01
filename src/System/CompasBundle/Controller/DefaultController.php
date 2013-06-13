@@ -359,6 +359,7 @@ class DefaultController extends Controller
      */
     public function list4Action(Request $request)
     {
+        /** @var  $formFactory \Symfony\Component\Form\FormFactory */
         $formFactory = $this->get('form.factory');
         $pagerList = new BasicPager($formFactory);
         $basicColumn = new BasicColumn($formFactory);
@@ -403,14 +404,20 @@ class DefaultController extends Controller
         $pagerList->setAllCount(38);
 
         $pagerForm = $pagerList->getForm();
+        $columnForm = $basicColumn->getForm();
+        $form = $formFactory->createBuilder()
+            ->add($pagerForm)
+//            ->add('column', $columnForm)
+            ->getForm();
 
 
-        $pagerForm->bind($request);
+        $form->bind($request);
 
 
         return array(
-            'form' => $pagerForm->createView(),
+            'form' => $form->createView(),
             'pager' => $pagerList->createView(),
+            'column' => $basicColumn->createView(),
         );
     }
 
