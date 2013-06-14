@@ -48,10 +48,6 @@
         </table>
 
 
-        {% set form_id = 'systemuser_list4' %}
-        {{ block('basic_pager') }}
-
-{#
         <div>
             {% for page in pager.PageNo.Rows %}
                 {% if page.select %}
@@ -61,46 +57,27 @@
                 {% endif %}
             {% endfor %}
         </div>
-#}
+
     </form>
 {% endblock %}
 
-{% block basic_pager %}
-    <div>
-        {% for page in pager.PageNo.Rows %}
-            {% if page.select %}
-                {{ page.label }}
-            {% else %}
-                <a href="#" onclick="basic_pager_pagenoClick('{{ page.pageNo }}')">{{ page.label }}</a>
-            {% endif %}
-        {% endfor %}
-    </div>
-    <script type="text/javascript">
-        //<![CDATA[
-        function basic_pager_pagenoClick(pageno){
-            $('#{{ form.basicpager.pageNo.vars.id }}').val(pageno);
-            $('#{{ form_id }}').submit();
-        }
-        //]]>
-    </script>
-{% endblock basic_pager %}
 
 {% block javascripts %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script type="text/javascript">
         //<![CDATA[
-
+        function pagenoClick(pageno){
+            $('#{{ form.basicpager.pageNo.vars.id }}').val(pageno);
+            $('#systemuser_list4').submit();
+        }
         function changePageSize(){
-            document.systemuser_list4.{{ form.basicpager.pageNo.vars.id }}.value = 1;
-            document.systemuser_list4.submit();
+            $('#{{ form.basicpager.pageNo.vars.id }}').val(1);
+            $('#systemuser_list4').submit();
         }
         function changeSortType(sortName, sortType){
-            document.systemuser_list4.{{ form.basiccolumn.sortName.vars.id }}.value = sortName;
-            document.systemuser_list4.{{ form.basiccolumn.sortType.vars.id }}.value = sortType;
-            document.systemuser_list4.submit();
-        }
-        function postBack(){
-            document.systemuser_list4.submit();
+            $('#{{ form.basiccolumn.sortName.vars.id }}').val(sortName);
+            $('#{{ form.basiccolumn.sortType.vars.id }}').val(sortType);
+            $('#systemuser_list4').submit();
         }
         //]]>
     </script>
