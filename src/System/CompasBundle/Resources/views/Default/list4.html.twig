@@ -5,7 +5,7 @@
 
 {% block body %}
     <h1>ユーザ一覧4</h1>
-    <form action="{{ path('systemuser_list4') }}" method="get" {{ form_enctype(form) }} novalidate name="systemuser_list4">
+    <form action="{{ path('systemuser_list4') }}" method="get" {{ form_enctype(form) }} novalidate name="systemuser_list4" id="systemuser_list4">
 
         {{ form_widget(form) }}
 
@@ -15,10 +15,10 @@
             <tr>
                 {% for header in column.Rows %}
                     <th>
-                        {# ソートさせるかチェック #}
+
                         {% if header.Enable %}
 
-                            {# ソート選択時の表示方法切り替え #}
+
                             {% if header.sortSelected %}
                                 {% if header.SortType == 'asc' %}
                                     <a href="#" onclick="changeSortType('{{ header.keyName }}', 'desc')">
@@ -48,42 +48,55 @@
         </table>
 
 
+        {% set form_id = 'systemuser_list4' %}
+        {{ block('basic_pager') }}
+
 {#
         <div>
-            {% for page in pager.pager_list.Rows %}
+            {% for page in pager.PageNo.Rows %}
                 {% if page.select %}
                     {{ page.label }}
                 {% else %}
-                    <a href="#" onclick="pagenoClick({{ page.pageNo }})">{{ page.label }}</a>
+                    <a href="#" onclick="pagenoClick('{{ page.pageNo }}')">{{ page.label }}</a>
                 {% endif %}
             {% endfor %}
-        </div>
-        <div>
-            {{ form_widget(pager.pager_size.FormView) }}
         </div>
 #}
     </form>
 {% endblock %}
 
+{% block basic_pager %}
+    <div>
+        {% for page in pager.PageNo.Rows %}
+            {% if page.select %}
+                {{ page.label }}
+            {% else %}
+                <a href="#" onclick="basic_pager_pagenoClick('{{ page.pageNo }}')">{{ page.label }}</a>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <script type="text/javascript">
+        //<![CDATA[
+        function basic_pager_pagenoClick(pageno){
+            $('#{{ form.basicpager.pageNo.vars.id }}').val(pageno);
+            $('#{{ form_id }}').submit();
+        }
+        //]]>
+    </script>
+{% endblock basic_pager %}
 
 {% block javascripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script type="text/javascript">
         //<![CDATA[
 
-        {#
-        function pagenoClick(pageno){
-            document.systemuser_list2.{{ form.pageNo.vars.id }}.value = pageno;
-            document.systemuser_list2.submit();
+        function changePageSize(){
+            document.systemuser_list4.{{ form.basicpager.pageNo.vars.id }}.value = 1;
+            document.systemuser_list4.submit();
         }
-         function changePageSize(){
-             var selectedNo = document.systemuser_list2.{{ pager.pager_size.FormView.vars.id }}.selectedIndex;
-             document.systemuser_list2.{{ form.pageSize.vars.id }}.value = document.systemuser_list2.{{ pager.pager_size.FormView.vars.id }}.options[selectedNo].value;
-             document.systemuser_list2.submit();
-         }
-         #}
         function changeSortType(sortName, sortType){
-            document.systemuser_list4.{{ form.sortName.vars.id }}.value = sortName;
-            document.systemuser_list4.{{ form.sortType.vars.id }}.value = sortType;
+            document.systemuser_list4.{{ form.basiccolumn.sortName.vars.id }}.value = sortName;
+            document.systemuser_list4.{{ form.basiccolumn.sortType.vars.id }}.value = sortType;
             document.systemuser_list4.submit();
         }
         function postBack(){

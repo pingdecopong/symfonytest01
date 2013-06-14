@@ -303,15 +303,11 @@ class DefaultController extends Controller
             ),
         );
 
-//        $pagerList->setAllCount(count($data));
         $pagerList->setAllCount(38);
 
         $pagerForm = $pagerList->getForm();
 
-//        if($request->isMethod('POST'))
-//        {
-            $pagerForm->bind($request);
-//        }
+        $pagerForm->bind($request);
 
         return array(
             'form' => $pagerForm->createView(),
@@ -361,7 +357,7 @@ class DefaultController extends Controller
     {
         /** @var  $formFactory \Symfony\Component\Form\FormFactory */
         $formFactory = $this->get('form.factory');
-        $pagerList = new BasicPager($formFactory);
+        $basicPager = new BasicPager($formFactory);
         $basicColumn = new BasicColumn($formFactory);
 
         $data = array(
@@ -400,23 +396,22 @@ class DefaultController extends Controller
                 'sort_enable' => true,
             ));
 
+        $basicPager->setAllCount(38);
 
-        $pagerList->setAllCount(38);
+        /** @var  $basicPagerFormBuilder \Symfony\Component\Form\FormBuilder */
+        $basicPagerFormBuilder = $basicPager->getFormBuilder();
+        $basicColumnFormBuilder = $basicColumn->getFormBuilder();
 
-        $pagerForm = $pagerList->getForm();
-        $columnForm = $basicColumn->getForm();
-        $form = $formFactory->createBuilder()
-            ->add($pagerForm)
-//            ->add('column', $columnForm)
+        $form = $formFactory->createBuilder('form', null, array('csrf_protection' => false))
+            ->add($basicPagerFormBuilder)
+            ->add($basicColumnFormBuilder)
             ->getForm();
-
 
         $form->bind($request);
 
-
         return array(
             'form' => $form->createView(),
-            'pager' => $pagerList->createView(),
+            'pager' => $basicPager->createView(),
             'column' => $basicColumn->createView(),
         );
     }

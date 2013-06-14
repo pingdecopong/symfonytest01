@@ -37,6 +37,13 @@ class BasicPager {
         $this->formType = new BasicPagerFormType();
     }
 
+    public function getFormBuilder()
+    {
+        //基礎フォーム生成
+        $formBuilder = $this->formFactory->createBuilder($this->formType, $this->formModel, array('csrf_protection' => false));
+        return $formBuilder;
+    }
+
     /**
      * @return mixed
      */
