@@ -1,0 +1,84 @@
+{% extends "::base.html.twig" %}
+{% form_theme form 'pingdecopongFormFreezeBundle:Form:form_layout.html.twig' %}
+
+{% block title %}ユーザ情報　一覧4{% endblock %}
+
+{% block body %}
+    <h1>ユーザ一覧4</h1>
+    <form action="{{ path('systemuser_list4') }}" method="get" {{ form_enctype(form) }} novalidate name="systemuser_list4" id="systemuser_list4">
+
+        {{ form_widget(form) }}
+
+
+        <table>
+            <thead>
+            <tr>
+                {% for header in column.Rows %}
+                    <th>
+
+                        {% if header.Enable %}
+
+
+                            {% if header.sortSelected %}
+                                {% if header.SortType == 'asc' %}
+                                    <a href="#" onclick="changeSortType('{{ header.keyName }}', 'desc')">
+                                        {{ header.label }}↓
+                                    </a>
+                                {% elseif header.SortType == 'desc' %}
+                                    <a href="#" onclick="changeSortType('{{ header.keyName }}', 'asc')">
+                                        {{ header.label }}↑
+                                    </a>
+                                {% endif %}
+                            {% else %}
+                                <a href="#" onclick="changeSortType('{{ header.keyName }}', 'asc')">
+                                    {{ header.label }}
+                                </a>
+                            {% endif %}
+                        {% else %}
+                            {{ header.label }}
+                        {% endif %}
+                    </th>
+                {% endfor %}
+
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+
+        <div>
+            {% for page in pager.PageNo.Rows %}
+                {% if page.select %}
+                    {{ page.label }}
+                {% else %}
+                    <a href="#" onclick="pagenoClick('{{ page.pageNo }}')">{{ page.label }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+    </form>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        //<![CDATA[
+        function pagenoClick(pageno){
+            $('#{{ form.basicpager.pageNo.vars.id }}').val(pageno);
+            $('#systemuser_list4').submit();
+        }
+        function changePageSize(){
+            $('#{{ form.basicpager.pageNo.vars.id }}').val(1);
+            $('#systemuser_list4').submit();
+        }
+        function changeSortType(sortName, sortType){
+            $('#{{ form.basiccolumn.sortName.vars.id }}').val(sortName);
+            $('#{{ form.basiccolumn.sortType.vars.id }}').val(sortType);
+            $('#systemuser_list4').submit();
+        }
+        //]]>
+    </script>
+{% endblock %}

@@ -6,6 +6,7 @@ build/
 vendor/
 bin/
 composer.phar
+composer.lock
 .idea/*
 app/config/parameters.yml
 .DS_Store
