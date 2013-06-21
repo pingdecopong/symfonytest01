@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new System\CompasBundle\SystemCompasBundle(),
             new Arte\Ober2doctrineBundle\ArteOber2doctrineBundle(),//ArteOber2doctrine
             new pingdecopong\FormFreezeBundle\pingdecopongFormFreezeBundle(),//FormFreeze
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),//
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

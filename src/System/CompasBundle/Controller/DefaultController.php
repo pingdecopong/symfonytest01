@@ -419,6 +419,34 @@ class DefaultController extends Controller
     /**
      * リスト
      *
+     * @Route("/list5", name="systemuser_list5")
+     * @Template()
+     */
+    public function list5Action(Request $request)
+    {
+        $queryBuilder = $this->getDoctrine()
+            ->getRepository('SystemCompasBundle:TBSystemUser')
+            ->createQueryBuilder('u')
+            ->leftJoin('u.tbcompany', 'c')
+            ->leftJoin('u.tbdepartment', 'd')
+            ->select(array('u', 'c', 'd'));
+
+        //
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $queryBuilder->getQuery(),
+            $this->get('request')->query->get('page', 1),
+            10
+        );
+
+        return array(
+            'pagination' => $pagination,
+        );
+    }
+
+    /**
+     * リスト
+     *
      * @Route("/list", name="systemuser_list")
      * @Template()
      */
