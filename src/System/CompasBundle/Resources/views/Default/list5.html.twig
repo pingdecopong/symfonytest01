@@ -9,12 +9,16 @@
         <tr>
             <th>{{ knp_pagination_sortable(pagination, 'ID', 'u.id') }}</th>
             <th{% if pagination.isSorted('u.DisplayName') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, '名前', 'u.DisplayName') }}</th>
+            <th{% if pagination.isSorted('u.tbcompany.name') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, '会社名', 'u.TBCompany.Name') }}</th>
         </tr>
 
         {% for user in pagination %}
             <tr>
                 <td>{{ user.id }}</td>
                 <td>{{ user.displayName }}</td>
+                {% if user.TBCompany %}
+                    <td>{{ user.TBCompany.Name }}</td>
+                {% endif %}
             </tr>
         {% endfor %}
     </table>
